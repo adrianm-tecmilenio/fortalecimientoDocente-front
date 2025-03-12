@@ -26,8 +26,6 @@ const Chatbot = () => {
   const handleSendMessage = async (message = inputValue) => {
     if (!message.trim() || isLoading) return; // Evitar mensajes vacíos o envíos múltiples
 
-    console.log("Mensaje enviado:", message);
-
     const userMessage = { text: message, sender: "user" };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     setInputValue("");
@@ -44,7 +42,6 @@ const Chatbot = () => {
       );
 
       const botMessage = { text: response.data.response, sender: "bot" };
-      console.log(response.data.response);
       setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
       console.error("Error al enviar el mensaje:", error);
@@ -58,22 +55,30 @@ const Chatbot = () => {
     }
   };
 
-  // Efecto para el typewriter
   useEffect(() => {
     const lastMessage = messages[messages.length - 1];
     if (lastMessage && lastMessage.sender === "bot") {
-      setDisplayedMessage("");
+      setDisplayedMessage(""); // Reiniciar el mensaje mostrado
       let index = 0;
-      const messageText = " " + lastMessage.text;
+      const messageText = lastMessage.text;
+
+      // Inicializar displayedMessage con el primer carácter
+      if (messageText.length > 0) {
+        setDisplayedMessage(messageText.charAt(0)); // Establecer el primer carácter
+        index = 1; // Comenzar desde el segundo carácter
+      }
+
+      let currentMessage = messageText.charAt(0); // Variable local para construir el mensaje
 
       const interval = setInterval(() => {
         if (index < messageText.length) {
-          setDisplayedMessage((prev) => prev + messageText.charAt(index));
+          currentMessage += messageText.charAt(index); // Agregar el siguiente carácter
+          setDisplayedMessage(currentMessage); // Actualizar el estado con el mensaje completo
           index++;
         } else {
           clearInterval(interval);
         }
-      }, 15); // Velocidad del typewriter (10ms por carácter)
+      }, 15); // Velocidad del typewriter (100ms por carácter)
 
       return () => clearInterval(interval); // Limpiar el intervalo al desmontar
     }
