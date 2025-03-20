@@ -34,7 +34,7 @@ const Chatbot = () => {
 
     try {
       const response = await axios.post(
-        "https://acodoc2.tecmilab.com.mx/pydantic-agent",
+        "https://fortdocente.tecmilab.com.mx/pydantic-agent",
         {
           message: message,
           session_id: sessionId,
