@@ -18,8 +18,8 @@ const Chatbot = () => {
 
   // Preguntas sugeridas
   const suggestedQuestions = [
-    "Ayudame a explicar el tema 3",
-    "Me podrías explicar la actividad 5",
+    "Oriéntame en cómo explicar el tema 17  de la regresión logística binaria en Python en la parte 2",
+    "Recomiéndame cómo hacer una evaluación a los alumnos referente al tema 18",
   ];
 
   // Función para manejar el envío de mensajes
