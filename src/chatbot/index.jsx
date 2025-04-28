@@ -24,9 +24,11 @@ const Chatbot = () => {
 
   // Función para manejar el envío de mensajes
   const handleSendMessage = async (message = inputValue) => {
-    if (!message.trim() || isLoading) return; // Evitar mensajes vacíos o envíos múltiples
+    // Asegurarse de que message sea un string
+    const messageText = typeof message === 'string' ? message : inputValue;
+    if (!messageText.trim() || isLoading) return;
 
-    const userMessage = { text: message, sender: "user" };
+    const userMessage = { text: messageText, sender: "user" };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     setInputValue("");
 
@@ -36,7 +38,7 @@ const Chatbot = () => {
       const response = await axios.post(
         "https://fortdocente.tecmilab.com.mx/pydantic-agent",
         {
-          message: message,
+          message: messageText,
           session_id: sessionId,
         }
       );
